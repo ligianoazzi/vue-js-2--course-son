@@ -1,0 +1,24 @@
+<html>
+<header>
+	<meta charset="UTF-8">
+	<title>Vue JS</title>		
+</header>
+<body>
+<div id="app">
+	{{ "Ligiano Azzi" }} {{variable}}<input type="text" v-model="variable">
+</div>
+	
+<!-- development version -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+<script>
+	new Vue({
+		el:"#app",
+		data: {
+			variable: 'lalala'
+		}
+
+	})
+</script>
+</body>
+</html>
