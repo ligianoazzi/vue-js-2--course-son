@@ -5,7 +5,11 @@
 </header>
 <body>
 <div id="app">
-	{{ "Ligiano Azzi" }} {{variable}}<input type="text" v-model="variable">
+	<input type="text" v-model="variable"> {{variable}}
+	<br>
+	<input type="text" v-model="variable2"> {{variable2}}
+	<br>
+	{{parseInt(variable) + parseInt(variable2)}}
 </div>
 	
 <!-- development version -->
@@ -15,7 +19,8 @@
 	new Vue({
 		el:"#app",
 		data: {
-			variable: 'lalala'
+			variable: '0',
+			variable2: '0',
 		}
 
 	})
