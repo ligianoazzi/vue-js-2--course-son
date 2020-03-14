@@ -20,7 +20,7 @@
 	<div class="row">
 		<h3>Campeonato Brasileiro - Serie A - 2018</h3>
 	</div>
-	<input type="text" :value="gols" :id="gols+'id'" @input="pegarValor"> {{gols}}
+	<input type="text" :value="gols" :id="gols+'id'" v-model="gols"> {{gols}}
 	<button class="btn btn-primary" @click="showAlert"> Fim de jogo </button>
 
 </div>
