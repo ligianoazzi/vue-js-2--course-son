@@ -1,146 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>School of Net - Vue.js - Campeonato Brasileiro 2018</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <style type="text/css">
-        .escudo {
-            width: 30px;
-            height: 30px;
-        }
-    </style>
+    <title>School of Net - Instância Vue</title>
 </head>
 <body>
-<div id="app" class="container">
-
-	<div class="row">
-		<h3>Campeonato Brasileiro - Serie A - 2018</h3>
-	</div>
-
-	<div class="row">
-		<div class="col-md-12">
-			<button class="btn btn-primary" @click="criarNovoJogo"> Novo Jogo </button>
-		</div>
-	</div>
-
-	<div></div>
-
-	<input type="text" class="form-control" v-model="novoJogo.casa.gols">
-	{{novoJogo.casa.time ? novoJogo.casa.time.nome : ""}}
-	X
-	<input type="text" class="form-control" v-model="novoJogo.fora.gols">
-	{{novoJogo.fora.time ? novoJogo.fora.time.nome : ""}}
-
-
-	<button class="btn btn-primary" @click="showAlert"> Fim de jogo </button>
-
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Nome</th>
-				<th>Pontos</th>
-				<th>GM</th>
-				<th>GS</th>
-				<th>Saldo</th>
-			</tr>			
-		</thead>
-		<tbody>
-			<tr v-for="time in times">
-				<td>
-					<img :src="time.escudo" alt="">
-					{{time.nome}}
-				</td>
-				<td>{{time.pontos}}</td>
-				<td>{{time.gm}}</td>
-				<td>{{time.gs}}</td>
-				<td>{{time.nome}}</td>
-			</tr>
-		</tbody>		
-	</table>
-
+<div id="app">
+    {{ "luiz carlos" }}
+    <input type="text" v-model="variavel">{{variavel}}
+    <input type="text" v-model="variavel2">{{variavel2}}
+    <p>
+        {{parseInt(variavel) + parseInt(variavel2)}}
+    </p>
 </div>
-
-<!-- development version -->
+<!-- development version, includes helpful console warnings -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 
+<!-- production version, optimized for size and speed -->
+<!--<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17"></script>-->
 <script>
-
-	class Time{ //ES6
-
-		constructor(nome, escudo){
-			this.nome = nome;
-			this.escudo = escudo;
-			this.pontos = 0;
-			this.gm = 0;
-			this.gs = 0;
-		}
-
-	}
-
-
-
-	new Vue({
-		el:"#app",
-		data: {
-			gols: "5",
-		    times: [
-	                new Time('palmeiras', 'assets/palmeiras_60x60.png'),
-	                new Time('Internacional', 'assets/internacional_60x60.png'),
-	                new Time('Flamengo', 'assets/flamengo_60x60.png'),
-	                new Time('Atlético-MG', 'assets/atletico_mg_60x60.png'),
-	                new Time('Santos', 'assets/santos_60x60.png'),
-	                new Time('Botafogo', 'assets/botafogo_60x60.png'),
-	                new Time('Atlético-PR', 'assets/atletico-pr_60x60.png'),
-	                new Time('Corinthians', 'assets/corinthians_60x60.png'),
-	                new Time('Grêmio', 'assets/gremio_60x60.png'),
-	                new Time('Fluminense', 'assets/fluminense_60x60.png'),
-	                new Time('Bahia', 'assets/bahia_60x60.png'),
-	                new Time('Chapecoense', 'assets/chapecoense_60x60.png'),
-	                new Time('São Paulo', 'assets/sao_paulo_60x60.png'),
-	                new Time('Cruzeiro', 'assets/cruzeiro_60x60.png'),
-	                new Time('Sport', 'assets/sport_60x60.png'),
-	                new Time('Ceará', 'assets/ceara_60x60.png'),
-	                new Time('Vitória', 'assets/vitoria_60x60.png'),
-	                new Time('Vasco', 'assets/vasco_60x60.png'),
-	                new Time('América-MG', 'assets/america_mg_60x60.png'),
-	                new Time('Paraná', 'assets/parana_60x60.png'),
-	            ],
-	        novoJogo: {
-	        	casa: {
-	        		time: null,
-	        		gols: 0
-	        	},
-	        	fora:{
-	        		time: null,
-	        		gols: 0
-	        	}	        
-			}
-		},	
-		methods: {
-			showAlert(){
-				alert("Fim de jogo")
-			},
-			pegarValor(){
-				console.log("Digitei algo")
-			},
-			criarNovoJogo(){
-				var indiceCasa = Math.floor(Math.random() * 20); //20 pq tenho 20 times
-				var	indiceFora = Math.floor(Math.random() * 20);  //20 pq tenho 20 times
-
-				this.novoJogo.casa.time = this.times[indiceCasa];
-				this.novoJogo.casa.gols = 0;
-
-				this.novoJogo.fora.time = this.times[indiceFora];
-				this.novoJogo.fora.gols = 0;
-
-				console.log(this.novoJogo);
-			}			
-		}// methods
-	})
+    new Vue({
+        el: "#app",
+        data: {
+            variavel: 3,
+            variavel2: 10
+        }
+    })
 </script>
 </body>
 </html>
+© 2020 GitHub, Inc.
