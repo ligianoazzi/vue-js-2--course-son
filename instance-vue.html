@@ -21,6 +21,23 @@
 		<h3>Campeonato Brasileiro - Serie A - 2018</h3>
 	</div>
 
+	<div class="row">
+		<div class="col-md-12">
+			<button class="btn btn-primary" @click="criarNovoJogo"> Novo Jogo </button>
+		</div>
+	</div>
+
+	<div></div>
+
+	<input type="text" class="form-control" v-model="novoJogo.casa.gols">
+	{{novoJogo.casa.time ? novoJogo.casa.time.nome : ""}}
+	X
+	<input type="text" class="form-control" v-model="novoJogo.fora.gols">
+	{{novoJogo.fora.time ? novoJogo.fora.time.nome : ""}}
+
+
+	<button class="btn btn-primary" @click="showAlert"> Fim de jogo </button>
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -44,9 +61,6 @@
 			</tr>
 		</tbody>		
 	</table>
-
-	<input type="text" :value="gols" :id="gols+'id'" v-model="gols"> {{gols}}
-	<button class="btn btn-primary" @click="showAlert"> Fim de jogo </button>
 
 </div>
 
@@ -95,16 +109,37 @@
 	                new Time('América-MG', 'assets/america_mg_60x60.png'),
 	                new Time('Paraná', 'assets/parana_60x60.png'),
 	            ],
-		},
+	        novoJogo: {
+	        	casa: {
+	        		time: null,
+	        		gols: 0
+	        	},
+	        	fora:{
+	        		time: null,
+	        		gols: 0
+	        	}	        
+			}
+		},	
 		methods: {
 			showAlert(){
 				alert("Fim de jogo")
 			},
 			pegarValor(){
 				console.log("Digitei algo")
-			}
-		}
+			},
+			criarNovoJogo(){
+				var indiceCasa = Math.floor(Math.random() * 20); //20 pq tenho 20 times
+				var	indiceFora = Math.floor(Math.random() * 20);  //20 pq tenho 20 times
 
+				this.novoJogo.casa.time = this.times[indiceCasa];
+				this.novoJogo.casa.gols = 0;
+
+				this.novoJogo.fora.time = this.times[indiceFora];
+				this.novoJogo.fora.gols = 0;
+
+				console.log(this.novoJogo);
+			}			
+		}// methods
 	})
 </script>
 </body>
