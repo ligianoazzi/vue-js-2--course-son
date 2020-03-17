@@ -59,12 +59,12 @@
 					<tr v-for="time in times">
 						<td>
 							<img :src="time.escudo" alt="" class="escudo">
-							{{time.nome}}
+							{{time.nome | ucwords}}
 						</td>
 						<td>{{time.pontos}}</td>
 						<td>{{time.gm}}</td>
 						<td>{{time.gs}}</td>
-						<td>{{time.nome}}</td>
+						<td>{{time | saldo}}</td>
 					</tr>
 				</tbody>		
 			</table>			
@@ -203,8 +203,16 @@
 				timeCasa.fimJogo(timeAdversario, golsMarcados, golsSofridos);
 				this.visao = "tabela";
 
-			}			
-		}// methods
+			},
+		},// methods
+		filters: {
+			saldo(time) {
+				return time.gm - time.gs;
+			},
+			ucwords(valor){
+				return valor.charAt(0).toUpperCase() + valor.slice(1);
+			}
+		}
 	})
 </script>
 </body>
