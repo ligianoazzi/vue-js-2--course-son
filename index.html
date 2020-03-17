@@ -12,6 +12,9 @@
             width: 30px;
             height: 30px;
         }
+        .margin-b-10 {
+        	margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -22,50 +25,52 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-12">
-			<button class="btn btn-primary" @click="criarNovoJogo"> Novo Jogo </button>
+		<div class="col-md-12 margin-b-10">
+			<button class="btn btn-primary" @click="criarNovoJogo"> Novo Jogo </button>			
 		</div>
 	</div>
 
-	<div></div>
+	<div class="row">
+		<div class="col-md-12" v-show="visao!='tabela'">
+			<form action="" class="form-inline">
+				{{novoJogo.casa.time ? novoJogo.casa.time.nome : ""}}
+				<input type="text" class="form-control col-md-1" v-model="novoJogo.casa.gols">
+				<img :src="novoJogo.casa.time ? novoJogo.casa.time.escudo : ''" alt="" class="escudo">
+				X
+				<img :src="novoJogo.fora.time ? novoJogo.fora.time.escudo : ''" alt="" class="escudo">
+				<input type="text" class="form-control col-md-1" v-model="novoJogo.fora.gols">
+				{{novoJogo.fora.time ? novoJogo.fora.time.nome : ""}}
+				<button type="button" class="btn btn-primary" @click="fimJogo"> Fim de jogo </button>
+			</form>			
+		</div>
 
-	<form action="" class="form-inline">
-		{{novoJogo.casa.time ? novoJogo.casa.time.nome : ""}}
-		<input type="text" class="form-control col-md-1" v-model="novoJogo.casa.gols">
-		<img :src="novoJogo.casa.time ? novoJogo.casa.time.escudo : ''" alt="" class="escudo">
-		X
-		<img :src="novoJogo.fora.time ? novoJogo.fora.time.escudo : ''" alt="" class="escudo">
-		<input type="text" class="form-control col-md-1" v-model="novoJogo.fora.gols">
-		{{novoJogo.fora.time ? novoJogo.fora.time.nome : ""}}
-		<button type="button" class="btn btn-primary" @click="fimJogo"> Fim de jogo </button>
-	</form>
+		<div class="col-md-12"  v-show="visao=='tabela'">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Pontos</th>
+						<th>GM</th>
+						<th>GS</th>
+						<th>Saldo</th>
+					</tr>			
+				</thead>
+				<tbody>
+					<tr v-for="time in times">
+						<td>
+							<img :src="time.escudo" alt="" class="escudo">
+							{{time.nome}}
+						</td>
+						<td>{{time.pontos}}</td>
+						<td>{{time.gm}}</td>
+						<td>{{time.gs}}</td>
+						<td>{{time.nome}}</td>
+					</tr>
+				</tbody>		
+			</table>			
+		</div>		
+	</div>
 
-
-
-
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Nome</th>
-				<th>Pontos</th>
-				<th>GM</th>
-				<th>GS</th>
-				<th>Saldo</th>
-			</tr>			
-		</thead>
-		<tbody>
-			<tr v-for="time in times">
-				<td>
-					<img :src="time.escudo" alt="" class="escudo">
-					{{time.nome}}
-				</td>
-				<td>{{time.pontos}}</td>
-				<td>{{time.gm}}</td>
-				<td>{{time.gs}}</td>
-				<td>{{time.nome}}</td>
-			</tr>
-		</tbody>		
-	</table>
 
 </div>
 
@@ -88,6 +93,7 @@
 			if(this.foiEmpate(golsMarcados, golsSofridos)){
 				this.empate(golsMarcados, golsSofridos);
 				timeVisitante.empate(golsMarcados, golsSofridos);
+				return;
 			}
 
 			if(this.foiVitoria(golsMarcados, golsSofridos)){
@@ -164,7 +170,8 @@
 	        		time: null,
 	        		gols: 0
 	        	}	        
-			}
+			},
+			visao: "tabela"
 		},	
 		methods: {
 			showAlert(){
@@ -183,6 +190,8 @@
 				this.novoJogo.fora.time = this.times[indiceFora];
 				this.novoJogo.fora.gols = 0;
 
+				this.visao = "placar";
+
 				console.log(this.novoJogo);
 			},
 
@@ -192,6 +201,7 @@
                 var timeAdversario = this.novoJogo.fora.time;
                 var timeCasa = this.novoJogo.casa.time;
 				timeCasa.fimJogo(timeAdversario, golsMarcados, golsSofridos);
+				this.visao = "tabela";
 
 			}			
 		}// methods
