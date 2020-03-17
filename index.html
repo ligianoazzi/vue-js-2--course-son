@@ -49,12 +49,9 @@
 				<thead>
 					<tr>
 						<th>Nome</th>
-						<th>
-							<a href="#" @click.prevent="orientacao = orientacao=='desc' ? 'asc':'desc' ">Pontos</a> <!-- asc e desc proveniente do lodash-->
+						<th v-for="(coluna, indice) in ordem.colunas">
+							<a href="#" @click.prevent="ordenar(indice)">{{coluna | ucwords}}</a> 
 						</th>
-						<th>GM</th>
-						<th>GS</th>
-						<th>Saldo</th>
 					</tr>			
 				</thead>
 				<tbody>
@@ -66,7 +63,7 @@
 						<td>{{time.pontos}}</td>
 						<td>{{time.gm}}</td>
 						<td>{{time.gs}}</td>
-						<td>{{time | saldo}}</td>
+						<td>{{time.saldo}}</td>
 					</tr>
 				</tbody>		
 			</table>
@@ -104,6 +101,7 @@
 			this.pontos = 0;
 			this.gm = 0;
 			this.gs = 0;
+			this.saldo = 0;
 		}
 
 		fimJogo(timeVisitante, golsMarcados, golsSofridos){
@@ -146,6 +144,7 @@
 			this.pontos += pontos;
 			this.gm += golsMarcados;
 			this.gs += golsSofridos;
+			this.saldo += this.gm - this.gs;
 		}
 
 	}
@@ -156,7 +155,10 @@
 		el:"#app",
 		data: {
 			gols: "5",
-			orientacao: "desc",
+			ordem: {
+              colunas: ['pontos', 'gm', 'gs', 'saldo'],
+              orientacao: ['desc', 'desc', 'asc', 'saldo']
+			},
 		    times: [
 	                new Time('palmeiras', 'assets/palmeiras_60x60.png'),
 	                new Time('Internacional', 'assets/internacional_60x60.png'),
@@ -199,7 +201,8 @@
 				return this.times.slice(17,20) // ultimos 4 rebaixados
 			},
 			timesOrdenados() {
-				return _.orderBy(this.times, 'pontos', this.orientacao)
+				console.log('ordenou', this.ordem);
+				return _.orderBy(this.times, this.ordem.colunas, this.ordem.orientacao)
 			},			
 
 		},
@@ -224,7 +227,6 @@
 
 				console.log(this.novoJogo);
 			},
-
 			fimJogo() {
                 var golsMarcados = parseInt(this.novoJogo.casa.gols);
                 var golsSofridos = parseInt(this.novoJogo.fora.gols);
@@ -234,6 +236,11 @@
 				this.visao = "tabela";
 
 			},
+			ordenar(indice) {
+				//this.ordem.orientacao[indice] = this.ordem.orientacao[indice]=='desc' ? 'asc':'desc';
+				this.$set(this.ordem.orientacao, indice, this.ordem.orientacao[indice]=='desc' ? 'asc':'desc');
+				// $set em razao das camadas, uma camada abaixo o vue nao enxerga
+			}
 		},// methods
 		filters: {
 			saldo(time) {
