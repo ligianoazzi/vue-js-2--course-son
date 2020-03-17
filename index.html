@@ -45,6 +45,7 @@
 		</div>
 
 		<div class="col-md-12"  v-show="visao=='tabela'">
+			<input type="text" class="form-control" v-model="busca">
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -55,7 +56,7 @@
 					</tr>			
 				</thead>
 				<tbody>
-					<tr v-for="time in timesOrdenados">
+					<tr v-for="time in timesFiltrados">
 						<td>
 							<img :src="time.escudo" alt="" class="escudo">
 							{{time.nome | ucwords}}
@@ -155,6 +156,7 @@
 		el:"#app",
 		data: {
 			gols: "5",
+			busca: '',
 			ordem: {
               colunas: ['pontos', 'gm', 'gs', 'saldo'],
               orientacao: ['desc', 'desc', 'asc', 'saldo']
@@ -200,9 +202,15 @@
 			timesRebaixados() {
 				return this.times.slice(17,20) // ultimos 4 rebaixados
 			},
-			timesOrdenados() {
+			timesFiltrados() {
 				console.log('ordenou', this.ordem);
-				return _.orderBy(this.times, this.ordem.colunas, this.ordem.orientacao)
+				var times = _.orderBy(this.times, this.ordem.colunas, this.ordem.orientacao);
+				var self = this;
+				return _.filter(times, function(time){
+					var busca = self.busca.toLowerCase();
+					return time.nome.toLowerCase().indexOf(busca) >= 0;					
+				})
+
 			},			
 
 		},
