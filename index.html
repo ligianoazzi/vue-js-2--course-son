@@ -21,7 +21,7 @@
 <div id="app" class="container">
 
 	<div class="row">
-		<h3>Campeonato Brasileiro - Serie A - 2018</h3>
+		<h1>Campeonato Brasileiro - Serie A - 2018</h1>
 	</div>
 
 	<div class="row">
@@ -67,7 +67,21 @@
 						<td>{{time | saldo}}</td>
 					</tr>
 				</tbody>		
-			</table>			
+			</table>
+			<h3>Times classificados Libertadores</h3>
+			<ul>
+				<li v-for="time in timesLibertadores">
+					<img :src="time.escudo" alt="" class="escudo">
+					{{time.nome | ucwords}}
+				</li>
+			</ul>
+			<h3>Times Rebaixados</h3>
+			<ul>
+				<li v-for="time in timesRebaixados">
+					<img :src="time.escudo" alt="" class="escudo">
+					{{time.nome | ucwords}}
+				</li>
+			</ul>			
 		</div>		
 	</div>
 
@@ -172,7 +186,15 @@
 	        	}	        
 			},
 			visao: "tabela"
-		},	
+		},
+		computed: {
+			timesLibertadores() {
+				return this.times.slice(0,6) // primeiros 6 estao na libertadores
+			},
+			timesRebaixados() {
+				return this.times.slice(17,20) // ultimos 4 rebaixados
+			}			
+		},
 		methods: {
 			showAlert(){
 				alert("Fim de jogo")
